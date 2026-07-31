@@ -9,19 +9,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout EML Base
       uses: actions/checkout@v4
+      with:
+        repository: 'EML-Project/Electron-Minecraft-Launcher'
+
+    - name: Overlay User Files
+      uses: actions/checkout@v4
+      with:
+        path: 'user_files'
+
+    - name: Copy Custom Assets
+      run: |
+        cp -f user_files/index.html . || true
+        cp -f user_files/style.css . || true
+        cp -f user_files/avantimc_logo.png . || true
 
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: 18
-
-    - name: Clone Launcher Base
-      run: |
-        git clone https://github.com/EML-Project/Electron-Minecraft-Launcher.git eml-base
-        cp -r eml-base/* .
-        rm -rf eml-base
 
     - name: Install dependencies
       run: npm install
