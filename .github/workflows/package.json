@@ -1,0 +1,32 @@
+{
+  "name": "avantimc-launcher",
+  "version": "1.0.0",
+  "description": "AvantiMC Launcher",
+  "main": "main.js",
+  "author": "AvantiMC",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win portable"
+  },
+  "devDependencies": {
+    "electron": "^28.3.3",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.avantimc.launcher",
+    "productName": "AvantiMC Launcher",
+    "files": [
+      "main.js",
+      "index.html",
+      "style.css",
+      "avantimc_logo.png"
+    ],
+    "win": {
+      "target": "portable"
+    },
+    "directories": {
+      "output": "dist"
+    }
+  }
+}
