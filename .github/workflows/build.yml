@@ -1,0 +1,38 @@
+name: Build Windows Launcher
+
+on:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Download EML Base
+      run: |
+        git clone https://github.com/EML-Project/Electron-Minecraft-Launcher.git eml-base
+        xcopy /E /Y eml-base\* .
+        rmdir /S /Q eml-base
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build Electron App
+      run: npm run build
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: AvantiMC-Launcher-Windows
+        path: dist/*.exe
