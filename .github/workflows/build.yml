@@ -12,16 +12,16 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    - name: Download EML Base
+      run: |
+        git clone https://github.com/EML-Project/Electron-Minecraft-Launcher.git temp_eml
+        robocopy temp_eml . /E /MOVE /XD .git
+        exit 0
+
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: 18
-
-    - name: Download EML Base
-      run: |
-        git clone https://github.com/EML-Project/Electron-Minecraft-Launcher.git eml-base
-        xcopy /E /Y eml-base\* .
-        rmdir /S /Q eml-base
 
     - name: Install dependencies
       run: npm install
